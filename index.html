@@ -1,102 +1,85 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Metime Move for More | Attendance Poster</title>
+<title>MOVE FOR MORE | Create Your Poster</title>
 
 <style>
 :root {
   --pink: #e83e79;
-  --light-pink: #fff4f8;
+  --light: #fff4f8;
   --dark: #29252b;
 }
-
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
   padding: 20px;
-  background: var(--light-pink);
+  background: var(--light);
   color: var(--dark);
   font-family: Arial, sans-serif;
 }
-
 main {
-  max-width: 900px;
+  max-width: 760px;
   margin: auto;
 }
-
 h1 {
-  color: #c52c65;
   text-align: center;
+  color: #c52c65;
 }
-
 .intro {
   text-align: center;
-  line-height: 1.6;
+  line-height: 1.7;
 }
-
-.panel {
-  display: grid;
-  grid-template-columns: minmax(240px, 340px) 1fr;
-  gap: 20px;
-  align-items: start;
-}
-
-form, .preview {
+.card {
   background: white;
-  padding: 16px;
-  border-radius: 16px;
   border: 1px solid #f2c6d6;
+  border-radius: 18px;
+  padding: 22px;
+  margin: 20px 0;
 }
-
 label {
   display: block;
   font-weight: bold;
-  margin: 14px 0 6px;
+  margin: 18px 0 8px;
 }
-
 input {
   width: 100%;
-  padding: 12px;
+  padding: 13px;
   font-size: 16px;
   border: 1px solid #e6c7d2;
-  border-radius: 8px;
+  border-radius: 9px;
 }
-
 button {
+  display: block;
   width: 100%;
-  padding: 13px;
-  margin-top: 12px;
+  padding: 15px;
+  margin-top: 15px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 9px;
   background: var(--pink);
   color: white;
+  font-size: 17px;
   font-weight: bold;
-  font-size: 16px;
   cursor: pointer;
 }
-
-button.secondary {
-  background: var(--dark);
+.secondary { background: var(--dark); }
+.note {
+  font-size: 14px;
+  line-height: 1.7;
 }
-
 canvas {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
+  margin-top: 20px;
 }
-
-.note {
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-@media (max-width: 650px) {
+[hidden] { display: none !important; }
+@media (max-width: 600px) {
   body { padding: 12px; }
-  .panel { grid-template-columns: 1fr; }
+  .card { padding: 16px; }
 }
 </style>
 </head>
@@ -108,75 +91,63 @@ canvas {
   <p class="intro">
     Create your personalised attendance poster for the
     <strong>Metime Centre Annual Fitness Walk 2026.</strong>
-    Add your photograph, download your poster and share it
-    with your friends!
+    Upload your photograph and create your poster.
+    You can download it on the next page.
   </p>
 
-  <div class="panel">
-
+  <section class="card">
     <form id="posterForm">
       <label for="name">Your name</label>
-      <input
-        id="name"
-        type="text"
-        maxlength="48"
-        placeholder="Enter your name"
-        required
-      >
+      <input id="name" type="text" maxlength="48"
+        placeholder="Enter your name" required>
 
       <label for="photo">Upload your photograph</label>
-      <input
-        id="photo"
-        type="file"
-        accept="image/*"
-        required
-      >
+      <input id="photo" type="file" accept="image/*" required>
 
       <p class="note">
-        Use a clear photograph. Your photo is processed in
-        your browser and is not uploaded to this website.
+        Use a clear photograph. Your photograph is processed
+        in your browser and is not uploaded to this website.
       </p>
 
       <button type="submit">Create My Poster</button>
 
-      <button
-        type="button"
-        class="secondary"
-        id="download"
-      >
-        Download Poster PNG
+      <button type="button" id="proceed"
+        class="secondary" hidden>
+        Proceed to Download
       </button>
-
-      <p class="note">
-        <strong>EVENT DETAILS</strong><br>
-        Date: Saturday, 14 November 2026<br>
-        Arrival: 7:00 AM — Pre-activities<br>
-        Distance: 6 km<br>
-        Starting point: Metime Centre, Kaduna, No. 1B Toro
-        Close, off Sultan Road, near Garkuwa Hospital,
-        Kaduna North.<br>
-        Contact: 09036556838<br>
-        Email: metimecenter@gmail.com
-      </p>
     </form>
 
-    <div class="preview">
-      <canvas
-        id="canvas"
-        width="1080"
-        height="1350"
-        aria-label="Personalised attendance poster preview"
-      ></canvas>
-    </div>
+    <p id="status" class="note" aria-live="polite"></p>
 
-  </div>
+    <canvas id="canvas" width="1080" height="1350"
+      aria-label="Personalised attendance poster"></canvas>
+  </section>
+
+  <section class="card">
+    <strong>EVENT DETAILS</strong>
+    <p class="note">
+      Date: Saturday, 14 November 2026<br>
+      Arrival: 7:00 AM — Pre-activities<br>
+      Distance: 6 km<br>
+      Starting point: Metime Centre, Kaduna, No. 1B Toro
+      Close, off Sultan Road, near Garkuwa Hospital,
+      Kaduna North.<br>
+      Contact: 09036556838<br>
+      Email: metimecenter@gmail.com
+    </p>
+  </section>
 </main>
 
 <script>
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+const nameInput = document.getElementById("name");
+const photoInput = document.getElementById("photo");
+const proceed = document.getElementById("proceed");
+const status = document.getElementById("status");
 
 let portrait = null;
+let posterReady = false;
 
 function roundedRect(x, y, w, h, r, color) {
   ctx.beginPath();
@@ -186,12 +157,9 @@ function roundedRect(x, y, w, h, r, color) {
 }
 
 function drawPoster() {
-  const W = 1080;
-  const H = 1350;
+  const W = 1080, H = 1350;
 
   ctx.clearRect(0, 0, W, H);
-
-  // Background
   ctx.fillStyle = "#fff8fa";
   ctx.fillRect(0, 0, W, H);
 
@@ -204,7 +172,6 @@ function drawPoster() {
   ctx.closePath();
   ctx.fill();
 
-  // Header
   ctx.textAlign = "center";
   ctx.fillStyle = "#c52c65";
   ctx.font = "bold 36px Arial";
@@ -212,16 +179,12 @@ function drawPoster() {
 
   ctx.fillStyle = "#29252b";
   ctx.font = "bold 23px Arial";
-  ctx.fillText(
-    "FITNESS • WELLNESS • SISTERHOOD",
-    540, 100
-  );
+  ctx.fillText("FITNESS • WELLNESS • SISTERHOOD", 540, 100);
 
   ctx.font = "italic 76px Georgia";
   ctx.fillText("I will be", 540, 190);
 
   roundedRect(280, 215, 520, 95, 20, "#29252b");
-
   ctx.fillStyle = "#ffffff";
   ctx.font = "bold 68px Arial";
   ctx.fillText("ATTENDING", 540, 282);
@@ -232,23 +195,17 @@ function drawPoster() {
 
   ctx.fillStyle = "#29252b";
   ctx.font = "bold 23px Arial";
-  ctx.fillText(
-    "A WOMEN-AND-GIRLS-ONLY EVENT",
-    540, 408
-  );
+  ctx.fillText("A WOMEN-AND-GIRLS-ONLY EVENT", 540, 408);
 
-  // Photo frame
   roundedRect(65, 455, 420, 470, 32, "#e83e79");
   roundedRect(82, 472, 386, 436, 22, "#fff0f5");
 
   if (portrait) {
     const box = { x: 92, y: 482, w: 366, h: 416 };
-
     const scale = Math.max(
       box.w / portrait.width,
       box.h / portrait.height
     );
-
     const sw = portrait.width * scale;
     const sh = portrait.height * scale;
 
@@ -256,44 +213,40 @@ function drawPoster() {
     ctx.beginPath();
     ctx.roundRect(box.x, box.y, box.w, box.h, 16);
     ctx.clip();
-
     ctx.drawImage(
       portrait,
       box.x + (box.w - sw) / 2,
       box.y + (box.h - sh) / 2,
-      sw,
-      sh
+      sw, sh
     );
-
     ctx.restore();
   } else {
     ctx.fillStyle = "#d88ca8";
     ctx.font = "bold 30px Arial";
-    ctx.textAlign = "center";
     ctx.fillText("YOUR PHOTO", 275, 675);
-
     ctx.font = "22px Arial";
     ctx.fillText("Upload your picture", 275, 715);
   }
 
-  // Participant name
-  const rawName = document.getElementById("name").value.trim();
-  const name = (rawName || "YOUR NAME").toUpperCase();
+  const participantName =
+    (nameInput.value.trim() || "YOUR NAME").toUpperCase();
 
   roundedRect(65, 930, 420, 65, 18, "#ffffff");
-
   ctx.fillStyle = "#29252b";
-  ctx.textAlign = "center";
   ctx.font = "bold 30px Arial";
 
-  let displayName = name;
-  if (ctx.measureText(displayName).width > 390) {
-    displayName = name.slice(0, 22) + "…";
+  let displayName = participantName;
+  while (
+    ctx.measureText(displayName).width > 390 &&
+    displayName.length > 3
+  ) {
+    displayName = displayName.slice(0, -2);
   }
-
+  if (displayName !== participantName) {
+    displayName = displayName.trim() + "…";
+  }
   ctx.fillText(displayName, 275, 972);
 
-  // Event details
   ctx.textAlign = "left";
   ctx.fillStyle = "#c52c65";
   ctx.font = "bold 32px Arial";
@@ -305,11 +258,9 @@ function drawPoster() {
   ctx.fillText("THROUGH FITNESS", 530, 582);
 
   roundedRect(520, 615, 500, 100, 18, "#e83e79");
-
   ctx.fillStyle = "#ffffff";
   ctx.font = "bold 27px Arial";
   ctx.fillText("SATURDAY, 14 NOVEMBER", 542, 655);
-
   ctx.font = "bold 36px Arial";
   ctx.fillText("2026", 542, 697);
 
@@ -328,9 +279,7 @@ function drawPoster() {
   ctx.fillText("No. 1B Toro Close, off Sultan Road,", 530, 912);
   ctx.fillText("near Garkuwa Hospital, Kaduna North.", 530, 941);
 
-  // Campaign footer
   roundedRect(55, 1030, 970, 200, 24, "#ffffff");
-
   ctx.textAlign = "center";
   ctx.fillStyle = "#c52c65";
   ctx.font = "bold 36px Arial";
@@ -338,103 +287,109 @@ function drawPoster() {
 
   ctx.fillStyle = "#29252b";
   ctx.font = "italic 29px Georgia";
-  ctx.fillText(
-    "For a healthier, happier you.",
-    540, 1140
-  );
+  ctx.fillText("For a healthier, happier you.", 540, 1140);
 
   ctx.fillStyle = "#c52c65";
   ctx.font = "bold 25px Arial";
-  ctx.fillText(
-    "WALK WITH US. MOVE FOR MORE.",
-    540, 1185
-  );
+  ctx.fillText("WALK WITH US. MOVE FOR MORE.", 540, 1185);
 
   ctx.fillStyle = "#29252b";
   ctx.font = "bold 22px Arial";
   ctx.fillText("CONTACT: 09036556838", 540, 1270);
-
   ctx.font = "21px Arial";
   ctx.fillText("metimecenter@gmail.com", 540, 1305);
 }
 
-// Update preview when the participant enters a name
-document.getElementById("name").addEventListener(
-  "input",
-  drawPoster
-);
-
-// Load the selected photograph
-document.getElementById("photo").addEventListener(
-  "change",
-  function (event) {
-    const file = event.target.files[0];
-
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      alert("Please select an image file.");
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-      const image = new Image();
-
-      image.onload = function () {
-        portrait = image;
-        drawPoster();
-      };
-
-      image.src = e.target.result;
-    };
-
-    reader.readAsDataURL(file);
-  }
-);
-
-// Download the personalised poster
-function downloadPoster() {
-  if (!document.getElementById("name").value.trim()) {
-    alert("Please enter your name.");
-    return;
-  }
-
-  if (!portrait) {
-    alert("Please upload your photograph.");
-    return;
-  }
-
-  drawPoster();
-
-  const safeName = document
-    .getElementById("name")
-    .value.trim()
-    .replace(/[^a-z0-9]+/gi, "-");
-
-  const link = document.createElement("a");
-
-  link.download = "Metime-Move-for-More-" + safeName + ".png";
-  link.href = canvas.toDataURL("image/png");
-  link.click();
+function invalidatePoster() {
+  posterReady = false;
+  proceed.hidden = true;
+  status.textContent = "";
 }
+
+nameInput.addEventListener("input", function() {
+  invalidatePoster();
+  drawPoster();
+});
+
+photoInput.addEventListener("change", function(event) {
+  invalidatePoster();
+  portrait = null;
+  const file = event.target.files[0];
+
+  if (!file) {
+    drawPoster();
+    return;
+  }
+
+  if (!file.type.startsWith("image/")) {
+    alert("Please select an image file.");
+    photoInput.value = "";
+    drawPoster();
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+    const image = new Image();
+    image.onload = function() {
+      portrait = image;
+      drawPoster();
+    };
+    image.onerror = function() {
+      alert("We couldn't read that image. Please choose another.");
+    };
+    image.src = e.target.result;
+  };
+
+  reader.onerror = function() {
+    alert("We couldn't read that file. Please try again.");
+  };
+
+  reader.readAsDataURL(file);
+});
 
 document.getElementById("posterForm").addEventListener(
   "submit",
-  function (event) {
+  function(event) {
     event.preventDefault();
-    downloadPoster();
+
+    if (!nameInput.value.trim()) {
+      alert("Please enter your name.");
+      return;
+    }
+    if (!portrait) {
+      alert("Please upload your photograph.");
+      return;
+    }
+
+    drawPoster();
+    posterReady = true;
+    proceed.hidden = false;
+    status.textContent =
+      "Your poster is ready! Click Proceed to Download to continue.";
+    proceed.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 );
 
-document.getElementById("download").addEventListener(
-  "click",
-  downloadPoster
-);
+proceed.addEventListener("click", function() {
+  if (!posterReady || !portrait) {
+    alert("Please create your poster first.");
+    return;
+  }
 
-// Show the initial poster
+  try {
+    const imageData = canvas.toDataURL("image/png");
+    sessionStorage.setItem("metimePosterData", imageData);
+    sessionStorage.setItem("metimePosterName", nameInput.value.trim());
+    window.location.href = "download.html";
+  } catch (error) {
+    alert("The poster could not be prepared. Please try a smaller photograph.");
+  }
+});
+
 drawPoster();
 </script>
 </body>
 </html>
+```
