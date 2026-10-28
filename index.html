@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,11 @@
 
 <style>
 :root {
-  --pink: #e83e79;
-  --light: #fff4f8;
-  --dark: #29252b;
+  --gold: #D4AF37;
+  --gold-dark: #A88620;
+  --gold-light: #F8F0D5;
+  --black: #171717;
+  --white: #FFFFFF;
 }
 
 * {
@@ -19,8 +22,8 @@
 body {
   margin: 0;
   padding: 20px;
-  background: var(--light);
-  color: var(--dark);
+  background: #FAF8F1;
+  color: var(--black);
   font-family: Arial, sans-serif;
 }
 
@@ -31,7 +34,7 @@ main {
 
 h1 {
   text-align: center;
-  color: #c52c65;
+  color: var(--gold-dark);
 }
 
 .intro {
@@ -40,8 +43,8 @@ h1 {
 }
 
 .card {
-  background: white;
-  border: 1px solid #f2c6d6;
+  background: var(--white);
+  border: 2px solid var(--gold);
   border-radius: 18px;
   padding: 22px;
   margin: 20px 0;
@@ -57,7 +60,7 @@ input {
   width: 100%;
   padding: 13px;
   font-size: 16px;
-  border: 1px solid #e6c7d2;
+  border: 1px solid #C9B66B;
   border-radius: 9px;
 }
 
@@ -66,17 +69,19 @@ button {
   width: 100%;
   padding: 15px;
   margin-top: 15px;
-  border: 0;
+  border: 2px solid var(--gold);
   border-radius: 9px;
-  background: var(--pink);
-  color: white;
+  background: var(--gold);
+  color: var(--black);
   font-size: 17px;
   font-weight: bold;
   cursor: pointer;
 }
 
 .secondary {
-  background: var(--dark);
+  background: var(--black);
+  color: var(--gold);
+  border-color: var(--black);
 }
 
 .note {
@@ -89,6 +94,7 @@ canvas {
   width: 100%;
   height: auto;
   margin-top: 20px;
+  border-radius: 8px;
 }
 
 [hidden] {
@@ -109,8 +115,7 @@ canvas {
 
 <body>
 <main>
-
-  <h1>💗 MOVE FOR MORE</h1>
+  <h1>METIME • MOVE FOR MORE</h1>
 
   <p class="intro">
     Create your personalised attendance poster for the
@@ -120,9 +125,7 @@ canvas {
   </p>
 
   <section class="card">
-
     <form id="posterForm">
-
       <label for="name">Your name</label>
       <input
         id="name"
@@ -145,7 +148,7 @@ canvas {
         in your browser and is not uploaded to this website.
       </p>
 
-      <button type="submit">Create My Poster</button>
+      <button type="submit">CREATE MY POSTER</button>
 
       <button
         type="button"
@@ -153,9 +156,8 @@ canvas {
         class="secondary"
         hidden
       >
-        Proceed to Download
+        PROCEED TO DOWNLOAD
       </button>
-
     </form>
 
     <p id="status" class="note" aria-live="polite"></p>
@@ -164,15 +166,12 @@ canvas {
       id="canvas"
       width="1080"
       height="1350"
-      aria-label="Personalised Metime Annual Fitness Walk poster"
+      aria-label="Personalised fitness walk poster"
     ></canvas>
-
   </section>
 
   <section class="card">
-
     <strong>EVENT DETAILS</strong>
-
     <p class="note">
       Event: Metime Annual Fitness Walk<br>
       Slogan: Move for More<br>
@@ -185,9 +184,7 @@ canvas {
       Contact: 09036556838<br>
       Email: metimecenter@gmail.com
     </p>
-
   </section>
-
 </main>
 
 <script>
@@ -202,6 +199,12 @@ const status = document.getElementById("status");
 let portrait = null;
 let posterReady = false;
 
+const GOLD = "#D4AF37";
+const DARK_GOLD = "#A88620";
+const PALE_GOLD = "#F8F0D5";
+const BLACK = "#171717";
+const WHITE = "#FFFFFF";
+
 function roundedRect(x, y, w, h, r, color) {
   ctx.beginPath();
   ctx.roundRect(x, y, w, h, r);
@@ -215,62 +218,60 @@ function drawPoster() {
 
   ctx.clearRect(0, 0, W, H);
 
-  ctx.fillStyle = "#fff8fa";
+  // White background
+  ctx.fillStyle = WHITE;
   ctx.fillRect(0, 0, W, H);
 
-  // Decorative pink background
-  ctx.fillStyle = "#fde0ea";
-  ctx.beginPath();
-  ctx.moveTo(0, 0);
-  ctx.lineTo(W, 0);
-  ctx.lineTo(W, 260);
-  ctx.quadraticCurveTo(600, 190, 0, 330);
-  ctx.closePath();
-  ctx.fill();
+  // Black and gold header
+  ctx.fillStyle = BLACK;
+  ctx.fillRect(0, 0, W, 250);
 
-  // Metime branding
+  ctx.fillStyle = GOLD;
+  ctx.fillRect(0, 245, W, 10);
+
   ctx.textAlign = "center";
-  ctx.fillStyle = "#c52c65";
-  ctx.font = "bold 36px Arial";
-  ctx.fillText("METIME FITNESS CENTRE KADUNA", 540, 60);
 
-  ctx.fillStyle = "#29252b";
-  ctx.font = "bold 23px Arial";
-  ctx.fillText("FITNESS • WELLNESS • SISTERHOOD", 540, 100);
+  ctx.fillStyle = GOLD;
+  ctx.font = "bold 34px Arial";
+  ctx.fillText("METIME FITNESS CENTRE KADUNA", 540, 55);
 
-  // Personal attendance statement
-  ctx.fillStyle = "#29252b";
-  ctx.font = "italic 76px Georgia";
-  ctx.fillText("I will be", 540, 190);
+  ctx.fillStyle = WHITE;
+  ctx.font = "bold 22px Arial";
+  ctx.fillText("FITNESS • WELLNESS • SISTERHOOD", 540, 95);
 
-  roundedRect(280, 215, 520, 95, 20, "#29252b");
+  ctx.fillStyle = WHITE;
+  ctx.font = "italic 72px Georgia";
+  ctx.fillText("I will be", 540, 175);
 
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 68px Arial";
-  ctx.fillText("ATTENDING", 540, 282);
+  // Attendance banner
+  roundedRect(280, 205, 520, 90, 16, GOLD);
 
-  // CLEAR EVENT NAME AND SLOGAN
-  ctx.fillStyle = "#c52c65";
-  ctx.font = "bold 35px Arial";
-  ctx.fillText("METIME ANNUAL FITNESS WALK", 540, 360);
+  ctx.fillStyle = BLACK;
+  ctx.font = "bold 64px Arial";
+  ctx.fillText("ATTENDING", 540, 268);
 
-  ctx.fillStyle = "#29252b";
-  ctx.font = "bold 32px Arial";
-  ctx.fillText("MOVE FOR MORE", 540, 403);
+  // Clear event title
+  ctx.fillStyle = DARK_GOLD;
+  ctx.font = "bold 34px Arial";
+  ctx.fillText("METIME ANNUAL FITNESS WALK", 540, 340);
+
+  ctx.fillStyle = BLACK;
+  ctx.font = "bold 34px Arial";
+  ctx.fillText("MOVE FOR MORE", 540, 390);
 
   ctx.font = "bold 20px Arial";
-  ctx.fillText("A WOMEN-AND-GIRLS-ONLY EVENT", 540, 437);
+  ctx.fillText("A WOMEN-AND-GIRLS-ONLY EVENT", 540, 425);
 
-  // Photograph frame
-  roundedRect(65, 455, 420, 470, 32, "#e83e79");
-  roundedRect(82, 472, 386, 436, 22, "#fff0f5");
+  // Photo frame
+  roundedRect(65, 455, 420, 470, 28, GOLD);
+  roundedRect(80, 470, 390, 440, 18, PALE_GOLD);
 
   if (portrait) {
     const box = {
-      x: 92,
-      y: 482,
-      w: 366,
-      h: 416
+      x: 90,
+      y: 480,
+      w: 370,
+      h: 420
     };
 
     const scale = Math.max(
@@ -282,9 +283,8 @@ function drawPoster() {
     const sh = portrait.height * scale;
 
     ctx.save();
-
     ctx.beginPath();
-    ctx.roundRect(box.x, box.y, box.w, box.h, 16);
+    ctx.roundRect(box.x, box.y, box.w, box.h, 14);
     ctx.clip();
 
     ctx.drawImage(
@@ -296,9 +296,8 @@ function drawPoster() {
     );
 
     ctx.restore();
-
   } else {
-    ctx.fillStyle = "#d88ca8";
+    ctx.fillStyle = DARK_GOLD;
     ctx.font = "bold 30px Arial";
     ctx.fillText("YOUR PHOTO", 275, 675);
 
@@ -310,9 +309,9 @@ function drawPoster() {
   const participantName =
     (nameInput.value.trim() || "YOUR NAME").toUpperCase();
 
-  roundedRect(65, 930, 420, 65, 18, "#ffffff");
+  roundedRect(65, 930, 420, 65, 14, BLACK);
 
-  ctx.fillStyle = "#29252b";
+  ctx.fillStyle = GOLD;
   ctx.font = "bold 30px Arial";
 
   let displayName = participantName;
@@ -330,67 +329,72 @@ function drawPoster() {
 
   ctx.fillText(displayName, 275, 972);
 
-  // Event information on the right
+  // Event details on right
   ctx.textAlign = "left";
 
-  ctx.fillStyle = "#c52c65";
+  ctx.fillStyle = DARK_GOLD;
   ctx.font = "bold 32px Arial";
   ctx.fillText("MOVE FOR MORE", 530, 500);
 
-  ctx.fillStyle = "#29252b";
-  ctx.font = "bold 26px Arial";
+  ctx.fillStyle = BLACK;
+  ctx.font = "bold 25px Arial";
   ctx.fillText("EMPOWERING WOMEN", 530, 545);
-  ctx.fillText("THROUGH FITNESS", 530, 582);
+  ctx.fillText("THROUGH FITNESS", 530, 580);
 
-  // Date
-  roundedRect(520, 615, 500, 100, 18, "#e83e79");
+  // Date banner
+  roundedRect(520, 615, 500, 100, 16, GOLD);
 
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "bold 27px Arial";
-  ctx.fillText("SATURDAY, 14 NOVEMBER", 542, 655);
+  ctx.fillStyle = BLACK;
+  ctx.font = "bold 26px Arial";
+  ctx.fillText("SATURDAY, 14 NOVEMBER", 540, 655);
 
   ctx.font = "bold 36px Arial";
-  ctx.fillText("2026", 542, 697);
+  ctx.fillText("2026", 540, 697);
 
-  // Walk details
-  ctx.fillStyle = "#29252b";
+  // Walk information
+  ctx.fillStyle = BLACK;
   ctx.font = "bold 26px Arial";
   ctx.fillText("ARRIVAL: 7:00 AM", 530, 760);
   ctx.fillText("DISTANCE: 6 KM", 530, 805);
 
-  ctx.fillStyle = "#c52c65";
+  ctx.fillStyle = DARK_GOLD;
   ctx.font = "bold 22px Arial";
   ctx.fillText("STARTING POINT:", 530, 850);
 
-  ctx.fillStyle = "#29252b";
-  ctx.font = "20px Arial";
+  ctx.fillStyle = BLACK;
+  ctx.font = "19px Arial";
   ctx.fillText("Metime Centre, Kaduna", 530, 883);
   ctx.fillText("No. 1B Toro Close, off Sultan Road,", 530, 912);
   ctx.fillText("near Garkuwa Hospital, Kaduna North.", 530, 941);
 
-  // Footer
-  roundedRect(55, 1030, 970, 200, 24, "#ffffff");
+  // Footer panel
+  roundedRect(55, 1030, 970, 200, 22, BLACK);
 
   ctx.textAlign = "center";
-  ctx.fillStyle = "#c52c65";
+
+  ctx.fillStyle = GOLD;
   ctx.font = "bold 36px Arial";
   ctx.fillText("WALK • CONNECT • STAY FIT", 540, 1090);
 
-  ctx.fillStyle = "#29252b";
-  ctx.font = "italic 29px Georgia";
+  ctx.fillStyle = WHITE;
+  ctx.font = "italic 28px Georgia";
   ctx.fillText("For a healthier, happier you.", 540, 1140);
 
-  ctx.fillStyle = "#c52c65";
+  ctx.fillStyle = GOLD;
   ctx.font = "bold 25px Arial";
   ctx.fillText("WALK WITH US. MOVE FOR MORE.", 540, 1185);
 
   // Contact details
-  ctx.fillStyle = "#29252b";
+  ctx.fillStyle = BLACK;
   ctx.font = "bold 22px Arial";
   ctx.fillText("CONTACT: 09036556838", 540, 1270);
 
   ctx.font = "21px Arial";
   ctx.fillText("metimecenter@gmail.com", 540, 1305);
+
+  // Gold bottom border
+  ctx.fillStyle = GOLD;
+  ctx.fillRect(0, 1335, W, 15);
 }
 
 function invalidatePoster() {
@@ -505,3 +509,5 @@ drawPoster();
 
 </body>
 </html>
+
+    
