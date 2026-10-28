@@ -1,0 +1,138 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download Your Poster | MOVE FOR MORE</title>
+
+<style>
+:root {
+  --pink: #e83e79;
+  --light: #fff4f8;
+  --dark: #29252b;
+}
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 20px;
+  background: var(--light);
+  color: var(--dark);
+  font-family: Arial, sans-serif;
+}
+main {
+  max-width: 760px;
+  margin: auto;
+  text-align: center;
+}
+h1 { color: #c52c65; }
+
+.card {
+  background: white;
+  border: 1px solid #f2c6d6;
+  border-radius: 18px;
+  padding: 20px;
+  margin-top: 20px;
+}
+p { line-height: 1.7; }
+
+#poster {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  height: auto;
+  margin: 20px auto;
+  border: 1px solid #f2c6d6;
+}
+button {
+  display: block;
+  width: 100%;
+  max-width: 540px;
+  padding: 15px;
+  margin: 12px auto;
+  border: 0;
+  border-radius: 9px;
+  background: var(--pink);
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.secondary { background: var(--dark); }
+.note { font-size: 14px; }
+[hidden] { display: none !important; }
+</style>
+</head>
+
+<body>
+<main>
+  <h1>💗 Your MOVE FOR MORE Poster</h1>
+
+  <section class="card">
+    <p id="message" aria-live="polite">
+      Preparing your personalised poster…
+    </p>
+
+    <img id="poster"
+      alt="Your personalised MOVE FOR MORE attendance poster"
+      hidden>
+
+    <button id="download" hidden>
+      Download Poster PNG
+    </button>
+
+    <button id="back" class="secondary">
+      Back to Create Poster
+    </button>
+
+    <p class="note">
+      Your photograph is processed in your browser.
+      It is not uploaded to this website.
+    </p>
+  </section>
+</main>
+
+<script>
+const imageData = sessionStorage.getItem("metimePosterData");
+const participantName =
+  sessionStorage.getItem("metimePosterName") || "Participant";
+
+const poster = document.getElementById("poster");
+const downloadButton = document.getElementById("download");
+const message = document.getElementById("message");
+
+if (imageData) {
+  poster.src = imageData;
+  poster.hidden = false;
+  downloadButton.hidden = false;
+
+  message.textContent =
+    "Well done, " + participantName +
+    "! Your personalised poster is ready.";
+} else {
+  message.textContent =
+    "Your poster was not found. Please return to the creation page, " +
+    "enter your details and create your poster first.";
+}
+
+downloadButton.addEventListener("click", function() {
+  if (!imageData) return;
+
+  const safeName = participantName
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/^-|-$/g, "") || "Participant";
+
+  const link = document.createElement("a");
+  link.download = "Metime-Move-for-More-" + safeName + ".png";
+  link.href = imageData;
+  link.click();
+});
+
+document.getElementById("back").addEventListener("click", function() {
+  window.location.href = "index.html";
+});
+</script>
+</body>
+</html>
+```
