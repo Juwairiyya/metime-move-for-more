@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MOVE FOR MORE | Create Your Poster</title>
+<title>Metime Annual Fitness Walk | Move for More</title>
 
 <style>
 :root {
@@ -12,7 +11,10 @@
   --light: #fff4f8;
   --dark: #29252b;
 }
-* { box-sizing: border-box; }
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -21,18 +23,22 @@ body {
   color: var(--dark);
   font-family: Arial, sans-serif;
 }
+
 main {
   max-width: 760px;
   margin: auto;
 }
+
 h1 {
   text-align: center;
   color: #c52c65;
 }
+
 .intro {
   text-align: center;
   line-height: 1.7;
 }
+
 .card {
   background: white;
   border: 1px solid #f2c6d6;
@@ -40,11 +46,13 @@ h1 {
   padding: 22px;
   margin: 20px 0;
 }
+
 label {
   display: block;
   font-weight: bold;
   margin: 18px 0 8px;
 }
+
 input {
   width: 100%;
   padding: 13px;
@@ -52,6 +60,7 @@ input {
   border: 1px solid #e6c7d2;
   border-radius: 9px;
 }
+
 button {
   display: block;
   width: 100%;
@@ -65,44 +74,71 @@ button {
   font-weight: bold;
   cursor: pointer;
 }
-.secondary { background: var(--dark); }
+
+.secondary {
+  background: var(--dark);
+}
+
 .note {
   font-size: 14px;
   line-height: 1.7;
 }
+
 canvas {
   display: block;
   width: 100%;
   height: auto;
   margin-top: 20px;
 }
-[hidden] { display: none !important; }
+
+[hidden] {
+  display: none !important;
+}
+
 @media (max-width: 600px) {
-  body { padding: 12px; }
-  .card { padding: 16px; }
+  body {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 16px;
+  }
 }
 </style>
 </head>
 
 <body>
 <main>
+
   <h1>💗 MOVE FOR MORE</h1>
 
   <p class="intro">
     Create your personalised attendance poster for the
     <strong>Metime Centre Annual Fitness Walk 2026.</strong>
     Upload your photograph and create your poster.
-    You can download it on the next page.
+    You can save your poster on the next page.
   </p>
 
   <section class="card">
+
     <form id="posterForm">
+
       <label for="name">Your name</label>
-      <input id="name" type="text" maxlength="48"
-        placeholder="Enter your name" required>
+      <input
+        id="name"
+        type="text"
+        maxlength="48"
+        placeholder="Enter your name"
+        required
+      >
 
       <label for="photo">Upload your photograph</label>
-      <input id="photo" type="file" accept="image/*" required>
+      <input
+        id="photo"
+        type="file"
+        accept="image/*"
+        required
+      >
 
       <p class="note">
         Use a clear photograph. Your photograph is processed
@@ -111,21 +147,35 @@ canvas {
 
       <button type="submit">Create My Poster</button>
 
-      <button type="button" id="proceed"
-        class="secondary" hidden>
+      <button
+        type="button"
+        id="proceed"
+        class="secondary"
+        hidden
+      >
         Proceed to Download
       </button>
+
     </form>
 
     <p id="status" class="note" aria-live="polite"></p>
 
-    <canvas id="canvas" width="1080" height="1350"
-      aria-label="Personalised attendance poster"></canvas>
+    <canvas
+      id="canvas"
+      width="1080"
+      height="1350"
+      aria-label="Personalised Metime Annual Fitness Walk poster"
+    ></canvas>
+
   </section>
 
   <section class="card">
+
     <strong>EVENT DETAILS</strong>
+
     <p class="note">
+      Event: Metime Annual Fitness Walk<br>
+      Slogan: Move for More<br>
       Date: Saturday, 14 November 2026<br>
       Arrival: 7:00 AM — Pre-activities<br>
       Distance: 6 km<br>
@@ -135,12 +185,15 @@ canvas {
       Contact: 09036556838<br>
       Email: metimecenter@gmail.com
     </p>
+
   </section>
+
 </main>
 
 <script>
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+
 const nameInput = document.getElementById("name");
 const photoInput = document.getElementById("photo");
 const proceed = document.getElementById("proceed");
@@ -157,12 +210,15 @@ function roundedRect(x, y, w, h, r, color) {
 }
 
 function drawPoster() {
-  const W = 1080, H = 1350;
+  const W = 1080;
+  const H = 1350;
 
   ctx.clearRect(0, 0, W, H);
+
   ctx.fillStyle = "#fff8fa";
   ctx.fillRect(0, 0, W, H);
 
+  // Decorative pink background
   ctx.fillStyle = "#fde0ea";
   ctx.beginPath();
   ctx.moveTo(0, 0);
@@ -172,6 +228,7 @@ function drawPoster() {
   ctx.closePath();
   ctx.fill();
 
+  // Metime branding
   ctx.textAlign = "center";
   ctx.fillStyle = "#c52c65";
   ctx.font = "bold 36px Arial";
@@ -181,73 +238,101 @@ function drawPoster() {
   ctx.font = "bold 23px Arial";
   ctx.fillText("FITNESS • WELLNESS • SISTERHOOD", 540, 100);
 
+  // Personal attendance statement
+  ctx.fillStyle = "#29252b";
   ctx.font = "italic 76px Georgia";
   ctx.fillText("I will be", 540, 190);
 
   roundedRect(280, 215, 520, 95, 20, "#29252b");
+
   ctx.fillStyle = "#ffffff";
   ctx.font = "bold 68px Arial";
   ctx.fillText("ATTENDING", 540, 282);
 
+  // CLEAR EVENT NAME AND SLOGAN
   ctx.fillStyle = "#c52c65";
-  ctx.font = "bold 44px Arial";
-  ctx.fillText("MOVE FOR MORE", 540, 365);
+  ctx.font = "bold 35px Arial";
+  ctx.fillText("METIME ANNUAL FITNESS WALK", 540, 360);
 
   ctx.fillStyle = "#29252b";
-  ctx.font = "bold 23px Arial";
-  ctx.fillText("A WOMEN-AND-GIRLS-ONLY EVENT", 540, 408);
+  ctx.font = "bold 32px Arial";
+  ctx.fillText("MOVE FOR MORE", 540, 403);
 
+  ctx.font = "bold 20px Arial";
+  ctx.fillText("A WOMEN-AND-GIRLS-ONLY EVENT", 540, 437);
+
+  // Photograph frame
   roundedRect(65, 455, 420, 470, 32, "#e83e79");
   roundedRect(82, 472, 386, 436, 22, "#fff0f5");
 
   if (portrait) {
-    const box = { x: 92, y: 482, w: 366, h: 416 };
+    const box = {
+      x: 92,
+      y: 482,
+      w: 366,
+      h: 416
+    };
+
     const scale = Math.max(
       box.w / portrait.width,
       box.h / portrait.height
     );
+
     const sw = portrait.width * scale;
     const sh = portrait.height * scale;
 
     ctx.save();
+
     ctx.beginPath();
     ctx.roundRect(box.x, box.y, box.w, box.h, 16);
     ctx.clip();
+
     ctx.drawImage(
       portrait,
       box.x + (box.w - sw) / 2,
       box.y + (box.h - sh) / 2,
-      sw, sh
+      sw,
+      sh
     );
+
     ctx.restore();
+
   } else {
     ctx.fillStyle = "#d88ca8";
     ctx.font = "bold 30px Arial";
     ctx.fillText("YOUR PHOTO", 275, 675);
+
     ctx.font = "22px Arial";
     ctx.fillText("Upload your picture", 275, 715);
   }
 
+  // Participant name
   const participantName =
     (nameInput.value.trim() || "YOUR NAME").toUpperCase();
 
   roundedRect(65, 930, 420, 65, 18, "#ffffff");
+
   ctx.fillStyle = "#29252b";
   ctx.font = "bold 30px Arial";
 
   let displayName = participantName;
+
   while (
     ctx.measureText(displayName).width > 390 &&
     displayName.length > 3
   ) {
     displayName = displayName.slice(0, -2);
   }
+
   if (displayName !== participantName) {
     displayName = displayName.trim() + "…";
   }
+
   ctx.fillText(displayName, 275, 972);
 
+  // Event information on the right
   ctx.textAlign = "left";
+
   ctx.fillStyle = "#c52c65";
   ctx.font = "bold 32px Arial";
   ctx.fillText("MOVE FOR MORE", 530, 500);
@@ -257,13 +342,17 @@ function drawPoster() {
   ctx.fillText("EMPOWERING WOMEN", 530, 545);
   ctx.fillText("THROUGH FITNESS", 530, 582);
 
+  // Date
   roundedRect(520, 615, 500, 100, 18, "#e83e79");
+
   ctx.fillStyle = "#ffffff";
   ctx.font = "bold 27px Arial";
   ctx.fillText("SATURDAY, 14 NOVEMBER", 542, 655);
+
   ctx.font = "bold 36px Arial";
   ctx.fillText("2026", 542, 697);
 
+  // Walk details
   ctx.fillStyle = "#29252b";
   ctx.font = "bold 26px Arial";
   ctx.fillText("ARRIVAL: 7:00 AM", 530, 760);
@@ -279,7 +368,9 @@ function drawPoster() {
   ctx.fillText("No. 1B Toro Close, off Sultan Road,", 530, 912);
   ctx.fillText("near Garkuwa Hospital, Kaduna North.", 530, 941);
 
+  // Footer
   roundedRect(55, 1030, 970, 200, 24, "#ffffff");
+
   ctx.textAlign = "center";
   ctx.fillStyle = "#c52c65";
   ctx.font = "bold 36px Arial";
@@ -293,9 +384,11 @@ function drawPoster() {
   ctx.font = "bold 25px Arial";
   ctx.fillText("WALK WITH US. MOVE FOR MORE.", 540, 1185);
 
+  // Contact details
   ctx.fillStyle = "#29252b";
   ctx.font = "bold 22px Arial";
   ctx.fillText("CONTACT: 09036556838", 540, 1270);
+
   ctx.font = "21px Arial";
   ctx.fillText("metimecenter@gmail.com", 540, 1305);
 }
@@ -314,6 +407,7 @@ nameInput.addEventListener("input", function() {
 photoInput.addEventListener("change", function(event) {
   invalidatePoster();
   portrait = null;
+
   const file = event.target.files[0];
 
   if (!file) {
@@ -332,13 +426,16 @@ photoInput.addEventListener("change", function(event) {
 
   reader.onload = function(e) {
     const image = new Image();
+
     image.onload = function() {
       portrait = image;
       drawPoster();
     };
+
     image.onerror = function() {
       alert("We couldn't read that image. Please choose another.");
     };
+
     image.src = e.target.result;
   };
 
@@ -358,17 +455,24 @@ document.getElementById("posterForm").addEventListener(
       alert("Please enter your name.");
       return;
     }
+
     if (!portrait) {
       alert("Please upload your photograph.");
       return;
     }
 
     drawPoster();
+
     posterReady = true;
     proceed.hidden = false;
+
     status.textContent =
       "Your poster is ready! Click Proceed to Download to continue.";
-    proceed.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    proceed.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
   }
 );
 
@@ -380,16 +484,24 @@ proceed.addEventListener("click", function() {
 
   try {
     const imageData = canvas.toDataURL("image/png");
+
     sessionStorage.setItem("metimePosterData", imageData);
-    sessionStorage.setItem("metimePosterName", nameInput.value.trim());
+    sessionStorage.setItem(
+      "metimePosterName",
+      nameInput.value.trim()
+    );
+
     window.location.href = "download.html";
+
   } catch (error) {
-    alert("The poster could not be prepared. Please try a smaller photograph.");
+    alert(
+      "The poster could not be prepared. Please try a smaller photograph."
+    );
   }
 });
 
 drawPoster();
 </script>
+
 </body>
 </html>
-```
