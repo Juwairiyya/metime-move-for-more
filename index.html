@@ -1,16 +1,14 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metime Annual Fitness Walk — Move for More</title>
 
-<title>Metime Annual Fitness Walk | Move for More</title>
-
-<!-- Elegant fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -21,43 +19,35 @@
   --white: #FFFFFF;
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
   padding: 20px;
   background: #FAF8F1;
   color: var(--black);
-  font-family: 'Montserrat', Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
-main {
-  max-width: 760px;
-  margin: auto;
-}
+main { max-width: 760px; margin: auto; }
 
 h1 {
   text-align: center;
   color: var(--dark-gold);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 38px;
+  font-family: 'Bodoni Moda', serif;
+  font-size: 36px;
   letter-spacing: 2px;
 }
 
-.intro {
-  text-align: center;
-  line-height: 1.8;
-}
+.intro { text-align: center; line-height: 1.8; }
 
 .card {
   background: var(--white);
   border: 1px solid var(--gold);
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 22px;
   margin: 20px 0;
-  box-shadow: 0 8px 24px rgba(23, 23, 23, 0.05);
+  box-shadow: 0 8px 24px #1717170D;
 }
 
 label {
@@ -69,10 +59,9 @@ label {
 input {
   width: 100%;
   padding: 13px;
-  font-size: 16px;
+  font: 16px 'Poppins', sans-serif;
   border: 1px solid #C9B66B;
-  border-radius: 9px;
-  font-family: 'Montserrat', Arial, sans-serif;
+  border-radius: 8px;
 }
 
 button {
@@ -81,13 +70,11 @@ button {
   padding: 15px;
   margin-top: 15px;
   border: 1px solid var(--gold);
-  border-radius: 9px;
+  border-radius: 8px;
   background: var(--gold);
   color: var(--black);
-  font-family: 'Montserrat', Arial, sans-serif;
-  font-size: 15px;
-  font-weight: 800;
-  letter-spacing: 1px;
+  font: 700 14px 'Poppins', sans-serif;
+  letter-spacing: 1.2px;
   cursor: pointer;
 }
 
@@ -97,10 +84,7 @@ button {
   border-color: var(--black);
 }
 
-.note {
-  font-size: 14px;
-  line-height: 1.8;
-}
+.note { font-size: 14px; line-height: 1.8; }
 
 canvas {
   display: block;
@@ -110,25 +94,17 @@ canvas {
   border-radius: 8px;
 }
 
-[hidden] {
-  display: none !important;
-}
+[hidden] { display: none !important; }
 
 @media (max-width: 600px) {
-  body {
-    padding: 12px;
-  }
-
-  .card {
-    padding: 16px;
-  }
+  body { padding: 12px; }
+  .card { padding: 16px; }
 }
 </style>
 </head>
 
 <body>
 <main>
-
   <h1>METIME · MOVE FOR MORE</h1>
 
   <p class="intro">
@@ -139,59 +115,30 @@ canvas {
   </p>
 
   <section class="card">
-
     <form id="posterForm">
-
       <label for="name">Your name</label>
-      <input
-        id="name"
-        type="text"
-        maxlength="48"
-        placeholder="Enter your name"
-        required
-      >
+      <input id="name" type="text" maxlength="48"
+        placeholder="Enter your name" required>
 
       <label for="photo">Upload your photograph</label>
-      <input
-        id="photo"
-        type="file"
-        accept="image/*"
-        required
-      >
+      <input id="photo" type="file" accept="image/*" required>
 
       <p class="note">
-        Use a clear photograph. Your photograph is processed
-        in your browser and is not uploaded to this website.
+        Your photograph is processed in your browser and is not uploaded.
       </p>
 
       <button type="submit">CREATE MY POSTER</button>
-
-      <button
-        type="button"
-        id="proceed"
-        class="secondary"
-        hidden
-      >
+      <button type="button" id="proceed" class="secondary" hidden>
         PROCEED TO DOWNLOAD
       </button>
-
     </form>
 
     <p id="status" class="note" aria-live="polite"></p>
-
-    <canvas
-      id="canvas"
-      width="1080"
-      height="1350"
-      aria-label="Personalised fitness walk poster"
-    ></canvas>
-
+    <canvas id="canvas" width="1080" height="1350"></canvas>
   </section>
 
   <section class="card">
-
     <strong>EVENT DETAILS</strong>
-
     <p class="note">
       Event: Metime Annual Fitness Walk<br>
       Slogan: Move for More<br>
@@ -204,15 +151,12 @@ canvas {
       Contact: 09036556838<br>
       Email: metimecenter@gmail.com
     </p>
-
   </section>
-
 </main>
 
 <script>
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-
 const nameInput = document.getElementById("name");
 const photoInput = document.getElementById("photo");
 const proceed = document.getElementById("proceed");
@@ -227,6 +171,9 @@ const PALE_GOLD = "#F8F0D5";
 const BLACK = "#171717";
 const WHITE = "#FFFFFF";
 
+const fontDisplay = '700 64px "Bodoni Moda", Georgia, serif';
+const fontBody = '700 26px "Poppins", Arial, sans-serif';
+
 function roundedRect(x, y, w, h, r, color) {
   ctx.beginPath();
   ctx.roundRect(x, y, w, h, r);
@@ -234,16 +181,27 @@ function roundedRect(x, y, w, h, r, color) {
   ctx.fill();
 }
 
-function loadPosterFonts() {
-  if (!document.fonts) {
-    return Promise.resolve();
+async function loadFonts() {
+  if (!document.fonts) return;
+
+  await Promise.all([
+    document.fonts.load('700 64px "Bodoni Moda"'),
+    document.fonts.load('400 40px "Bodoni Moda"'),
+    document.fonts.load('700 26px "Poppins"'),
+    document.fonts.load('400 20px "Poppins"')
+  ]);
+}
+
+function fitText(text, maxWidth, startSize, family, weight = 700) {
+  let size = startSize;
+  ctx.font = `${weight} ${size}px "${family}"`;
+
+  while (ctx.measureText(text).width > maxWidth && size > 16) {
+    size -= 1;
+    ctx.font = `${weight} ${size}px "${family}"`;
   }
 
-  return Promise.all([
-    document.fonts.load('700 70px "Cormorant Garamond"'),
-    document.fonts.load('700 30px "Montserrat"'),
-    document.fonts.load('400 65px "Great Vibes"')
-  ]);
+  return ctx.font;
 }
 
 function drawPoster() {
@@ -251,98 +209,77 @@ function drawPoster() {
   const H = 1350;
 
   ctx.clearRect(0, 0, W, H);
-
-  // White background
   ctx.fillStyle = WHITE;
   ctx.fillRect(0, 0, W, H);
 
-  // Black header
+  // Premium black header with gold detailing
   ctx.fillStyle = BLACK;
   ctx.fillRect(0, 0, W, 250);
 
-  // Gold accent
   ctx.fillStyle = GOLD;
-  ctx.fillRect(0, 245, W, 10);
+  ctx.fillRect(0, 245, W, 5);
 
   ctx.textAlign = "center";
 
-  // Centre name
   ctx.fillStyle = GOLD;
-  ctx.font = '700 31px "Montserrat", Arial, sans-serif';
-  ctx.fillText("METIME FITNESS CENTRE KADUNA", 540, 55);
+  ctx.font = '700 29px "Poppins", sans-serif';
+  ctx.fillText("METIME FITNESS CENTRE KADUNA", 540, 52);
 
   ctx.fillStyle = WHITE;
-  ctx.font = '500 20px "Montserrat", Arial, sans-serif';
-  ctx.fillText("FITNESS  •  WELLNESS  •  SISTERHOOD", 540, 95);
+  ctx.font = '500 19px "Poppins", sans-serif';
+  ctx.fillText("FITNESS  •  WELLNESS  •  SISTERHOOD", 540, 88);
 
-  // Elegant script
   ctx.fillStyle = WHITE;
-  ctx.font = '400 75px "Great Vibes", cursive';
-  ctx.fillText("I will be", 540, 177);
+  ctx.font = '500 69px "Bodoni Moda", Georgia, serif';
+  ctx.fillText("I will be", 540, 173);
 
-  // Attendance banner
-  roundedRect(280, 205, 520, 90, 12, GOLD);
+  roundedRect(280, 205, 520, 86, 8, GOLD);
+  ctx.fillStyle = BLACK;
+  ctx.font = '800 57px "Poppins", sans-serif';
+  ctx.fillText("ATTENDING", 540, 262);
+
+  // Event title and slogan
+  ctx.fillStyle = DARK_GOLD;
+  ctx.font = fitText("METIME ANNUAL FITNESS WALK", 1000, 46, "Bodoni Moda");
+  ctx.fillText("METIME ANNUAL FITNESS WALK", 540, 337);
 
   ctx.fillStyle = BLACK;
-  ctx.font = '800 60px "Montserrat", Arial, sans-serif';
-  ctx.fillText("ATTENDING", 540, 265);
+  ctx.font = '800 33px "Poppins", sans-serif';
+  ctx.fillText("MOVE FOR MORE", 540, 388);
 
-  // Event title
   ctx.fillStyle = DARK_GOLD;
-  ctx.font = '700 45px "Cormorant Garamond", Georgia, serif';
-  ctx.fillText("METIME ANNUAL FITNESS WALK", 540, 340);
-
-  // Slogan
-  ctx.fillStyle = BLACK;
-  ctx.font = '800 32px "Montserrat", Arial, sans-serif';
-  ctx.fillText("MOVE FOR MORE", 540, 390);
-
-  // Audience
-  ctx.fillStyle = DARK_GOLD;
-  ctx.font = '700 19px "Montserrat", Arial, sans-serif';
-  ctx.fillText("A WOMEN-AND-GIRLS-ONLY EVENT", 540, 425);
+  ctx.font = '600 18px "Poppins", sans-serif';
+  ctx.fillText("A WOMEN-AND-GIRLS-ONLY EVENT", 540, 422);
 
   // Photo frame
-  roundedRect(65, 455, 420, 470, 24, GOLD);
-  roundedRect(80, 470, 390, 440, 16, PALE_GOLD);
+  roundedRect(65, 455, 420, 470, 22, GOLD);
+  roundedRect(80, 470, 390, 440, 14, PALE_GOLD);
 
   if (portrait) {
-    const box = {
-      x: 90,
-      y: 480,
-      w: 370,
-      h: 420
-    };
-
+    const box = { x: 90, y: 480, w: 370, h: 420 };
     const scale = Math.max(
       box.w / portrait.width,
       box.h / portrait.height
     );
-
     const sw = portrait.width * scale;
     const sh = portrait.height * scale;
 
     ctx.save();
     ctx.beginPath();
-    ctx.roundRect(box.x, box.y, box.w, box.h, 12);
+    ctx.roundRect(box.x, box.y, box.w, box.h, 10);
     ctx.clip();
-
     ctx.drawImage(
       portrait,
       box.x + (box.w - sw) / 2,
       box.y + (box.h - sh) / 2,
-      sw,
-      sh
+      sw, sh
     );
-
     ctx.restore();
-
   } else {
     ctx.fillStyle = DARK_GOLD;
-    ctx.font = '700 28px "Montserrat", Arial, sans-serif';
+    ctx.font = '700 27px "Poppins", sans-serif';
     ctx.fillText("YOUR PHOTO", 275, 675);
-
-    ctx.font = '400 20px "Montserrat", Arial, sans-serif';
+    ctx.font = '400 19px "Poppins", sans-serif';
     ctx.fillText("Upload your picture", 275, 715);
   }
 
@@ -350,90 +287,73 @@ function drawPoster() {
   const participantName =
     (nameInput.value.trim() || "YOUR NAME").toUpperCase();
 
-  roundedRect(65, 930, 420, 65, 12, BLACK);
-
+  roundedRect(65, 930, 420, 65, 10, BLACK);
   ctx.fillStyle = GOLD;
-  ctx.font = '700 32px "Cormorant Garamond", Georgia, serif';
+  ctx.textAlign = "center";
+  ctx.font = fitText(participantName, 390, 34, "Bodoni Moda");
+  ctx.fillText(participantName, 275, 972);
 
-  let displayName = participantName;
-
-  while (
-    ctx.measureText(displayName).width > 390 &&
-    displayName.length > 3
-  ) {
-    displayName = displayName.slice(0, -2);
-  }
-
-  if (displayName !== participantName) {
-    displayName = displayName.trim() + "…";
-  }
-
-  ctx.fillText(displayName, 275, 972);
-
-  // Right-hand event details
+  // Event information
   ctx.textAlign = "left";
 
   ctx.fillStyle = DARK_GOLD;
-  ctx.font = '700 32px "Cormorant Garamond", Georgia, serif';
+  ctx.font = '700 33px "Bodoni Moda", Georgia, serif';
   ctx.fillText("MOVE FOR MORE", 530, 500);
 
   ctx.fillStyle = BLACK;
-  ctx.font = '700 23px "Montserrat", Arial, sans-serif';
+  ctx.font = '700 22px "Poppins", sans-serif';
   ctx.fillText("EMPOWERING WOMEN", 530, 545);
   ctx.fillText("THROUGH FITNESS", 530, 580);
 
-  // Date banner
-  roundedRect(520, 615, 500, 100, 12, GOLD);
+  roundedRect(520, 615, 500, 100, 10, GOLD);
 
   ctx.fillStyle = BLACK;
-  ctx.font = '700 23px "Montserrat", Arial, sans-serif';
-  ctx.fillText("SATURDAY, 14 NOVEMBER", 540, 655);
+  ctx.font = fitText(
+    "SATURDAY, 14 NOVEMBER", 460, 24, "Poppins"
+  );
+  ctx.fillText("SATURDAY, 14 NOVEMBER", 540, 654);
 
-  ctx.font = '700 36px "Cormorant Garamond", Georgia, serif';
+  ctx.font = '700 36px "Bodoni Moda", Georgia, serif';
   ctx.fillText("2026", 540, 697);
 
-  // Walk information
   ctx.fillStyle = BLACK;
-  ctx.font = '700 24px "Montserrat", Arial, sans-serif';
+  ctx.font = '700 23px "Poppins", sans-serif';
   ctx.fillText("ARRIVAL: 7:00 AM", 530, 760);
   ctx.fillText("DISTANCE: 6 KM", 530, 805);
 
   ctx.fillStyle = DARK_GOLD;
-  ctx.font = '700 21px "Montserrat", Arial, sans-serif';
+  ctx.font = '700 19px "Poppins", sans-serif';
   ctx.fillText("STARTING POINT:", 530, 850);
 
   ctx.fillStyle = BLACK;
-  ctx.font = '500 17px "Montserrat", Arial, sans-serif';
+  ctx.font = '500 16px "Poppins", sans-serif';
   ctx.fillText("Metime Centre, Kaduna", 530, 883);
   ctx.fillText("No. 1B Toro Close, off Sultan Road,", 530, 912);
   ctx.fillText("near Garkuwa Hospital, Kaduna North.", 530, 941);
 
-  // Footer
-  roundedRect(55, 1030, 970, 200, 18, BLACK);
+  // Black footer with refined typography
+  roundedRect(55, 1030, 970, 200, 14, BLACK);
 
   ctx.textAlign = "center";
-
   ctx.fillStyle = GOLD;
-  ctx.font = '700 32px "Cormorant Garamond", Georgia, serif';
+  ctx.font = '700 34px "Bodoni Moda", Georgia, serif';
   ctx.fillText("WALK  •  CONNECT  •  STAY FIT", 540, 1090);
 
   ctx.fillStyle = WHITE;
-  ctx.font = '400 29px "Great Vibes", cursive';
+  ctx.font = '400 23px "Bodoni Moda", Georgia, serif';
   ctx.fillText("For a healthier, happier you.", 540, 1140);
 
   ctx.fillStyle = GOLD;
-  ctx.font = '700 22px "Montserrat", Arial, sans-serif';
+  ctx.font = '700 20px "Poppins", sans-serif';
   ctx.fillText("WALK WITH US. MOVE FOR MORE.", 540, 1185);
 
-  // Contact
   ctx.fillStyle = BLACK;
-  ctx.font = '700 21px "Montserrat", Arial, sans-serif';
+  ctx.font = '700 21px "Poppins", sans-serif';
   ctx.fillText("CONTACT: 09036556838", 540, 1270);
 
-  ctx.font = '500 20px "Montserrat", Arial, sans-serif';
+  ctx.font = '500 19px "Poppins", sans-serif';
   ctx.fillText("metimecenter@gmail.com", 540, 1305);
 
-  // Bottom gold border
   ctx.fillStyle = GOLD;
   ctx.fillRect(0, 1335, W, 15);
 }
@@ -444,12 +364,12 @@ function invalidatePoster() {
   status.textContent = "";
 }
 
-nameInput.addEventListener("input", function() {
+nameInput.addEventListener("input", () => {
   invalidatePoster();
   drawPoster();
 });
 
-photoInput.addEventListener("change", function(event) {
+photoInput.addEventListener("change", event => {
   invalidatePoster();
   portrait = null;
 
@@ -469,22 +389,22 @@ photoInput.addEventListener("change", function(event) {
 
   const reader = new FileReader();
 
-  reader.onload = function(e) {
+  reader.onload = e => {
     const image = new Image();
 
-    image.onload = function() {
+    image.onload = () => {
       portrait = image;
       drawPoster();
     };
 
-    image.onerror = function() {
+    image.onerror = () => {
       alert("We couldn't read that image. Please choose another.");
     };
 
     image.src = e.target.result;
   };
 
-  reader.onerror = function() {
+  reader.onerror = () => {
     alert("We couldn't read that file. Please try again.");
   };
 
@@ -493,7 +413,7 @@ photoInput.addEventListener("change", function(event) {
 
 document.getElementById("posterForm").addEventListener(
   "submit",
-  async function(event) {
+  async event => {
     event.preventDefault();
 
     if (!nameInput.value.trim()) {
@@ -506,19 +426,17 @@ document.getElementById("posterForm").addEventListener(
       return;
     }
 
-    status.textContent = "Preparing your elegant poster...";
+    status.textContent = "Preparing your poster...";
 
     try {
-      await loadPosterFonts();
+      await loadFonts();
     } catch (error) {
-      // Continue with available fallback fonts.
+      // Use fallback fonts if the online fonts cannot load.
     }
 
     drawPoster();
-
     posterReady = true;
     proceed.hidden = false;
-
     status.textContent =
       "Your poster is ready! Click Proceed to Download.";
 
@@ -529,14 +447,14 @@ document.getElementById("posterForm").addEventListener(
   }
 );
 
-proceed.addEventListener("click", async function() {
+proceed.addEventListener("click", async () => {
   if (!posterReady || !portrait) {
     alert("Please create your poster first.");
     return;
   }
 
   try {
-    await loadPosterFonts();
+    await loadFonts();
     drawPoster();
 
     const imageData = canvas.toDataURL("image/png");
@@ -548,18 +466,16 @@ proceed.addEventListener("click", async function() {
     );
 
     window.location.href = "download.html";
-
   } catch (error) {
-    alert(
-      "The poster could not be prepared. Please try a smaller photograph."
-    );
+    alert("The poster could not be prepared. Please try a smaller photograph.");
   }
 });
 
-// Load fonts before drawing the initial preview.
-loadPosterFonts().finally(drawPoster);
+loadFonts().then(drawPoster).catch(drawPoster);
 </script>
-
 </body>
 </html>
 ```
+:::
+
+After you commit the code, refresh your website. The new fonts should appear in the poster itself, not just on the webpage.
