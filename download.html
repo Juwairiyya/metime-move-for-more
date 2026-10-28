@@ -1,9 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#e83e79">
 <title>Download Your Poster | MOVE FOR MORE</title>
 
 <style>
@@ -12,30 +12,41 @@
   --light: #fff4f8;
   --dark: #29252b;
 }
-* { box-sizing: border-box; }
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  padding: 20px;
+  padding: 16px;
   background: var(--light);
   color: var(--dark);
   font-family: Arial, sans-serif;
 }
+
 main {
-  max-width: 760px;
+  max-width: 700px;
   margin: auto;
   text-align: center;
 }
-h1 { color: #c52c65; }
+
+h1 {
+  color: #c52c65;
+  font-size: 27px;
+}
 
 .card {
   background: white;
   border: 1px solid #f2c6d6;
   border-radius: 18px;
-  padding: 20px;
+  padding: 18px;
   margin-top: 20px;
 }
-p { line-height: 1.7; }
+
+p {
+  line-height: 1.6;
+}
 
 #poster {
   display: block;
@@ -44,24 +55,36 @@ p { line-height: 1.7; }
   height: auto;
   margin: 20px auto;
   border: 1px solid #f2c6d6;
+  border-radius: 8px;
 }
+
 button {
   display: block;
   width: 100%;
   max-width: 540px;
-  padding: 15px;
+  min-height: 52px;
+  padding: 14px;
   margin: 12px auto;
-  border: 0;
-  border-radius: 9px;
+  border: none;
+  border-radius: 10px;
   background: var(--pink);
   color: white;
   font-size: 17px;
   font-weight: bold;
   cursor: pointer;
 }
-.secondary { background: var(--dark); }
-.note { font-size: 14px; }
-[hidden] { display: none !important; }
+
+.secondary {
+  background: var(--dark);
+}
+
+.note {
+  font-size: 14px;
+}
+
+[hidden] {
+  display: none !important;
+}
 </style>
 </head>
 
@@ -71,24 +94,35 @@ button {
 
   <section class="card">
     <p id="message" aria-live="polite">
-      Preparing your personalised poster…
+      Preparing your personalised poster...
     </p>
 
-    <img id="poster"
+    <img
+      id="poster"
       alt="Your personalised MOVE FOR MORE attendance poster"
-      hidden>
+      hidden
+    >
 
-    <button id="download" hidden>
-      Download Poster PNG
+    <button id="savePhoto" hidden>
+      SAVE POSTER TO PHOTOS
+    </button>
+
+    <button id="download" hidden class="secondary">
+      DOWNLOAD POSTER PNG
     </button>
 
     <button id="back" class="secondary">
-      Back to Create Poster
+      BACK TO CREATE POSTER
     </button>
 
     <p class="note">
-      Your photograph is processed in your browser.
-      It is not uploaded to this website.
+      After tapping Save Poster to Photos, look for
+      Save Image or Save to Photos in your iPhone sharing menu.
+    </p>
+
+    <p class="note">
+      Your photograph is processed in your browser and is
+      not uploaded to this website.
     </p>
   </section>
 </main>
@@ -99,40 +133,118 @@ const participantName =
   sessionStorage.getItem("metimePosterName") || "Participant";
 
 const poster = document.getElementById("poster");
-const downloadButton = document.getElementById("download");
 const message = document.getElementById("message");
+const savePhotoButton = document.getElementById("savePhoto");
+const downloadButton = document.getElementById("download");
 
-if (imageData) {
-  poster.src = imageData;
-  poster.hidden = false;
-  downloadButton.hidden = false;
+let posterBlob = null;
 
-  message.textContent =
-    "Well done, " + participantName +
-    "! Your personalised poster is ready.";
-} else {
-  message.textContent =
-    "Your poster was not found. Please return to the creation page, " +
-    "enter your details and create your poster first.";
+function safeFileName() {
+  const cleanName = participantName
+    .replace(/[^a-z0-9]+/gi, "-")
+    .replace(/^-|-$/g, "");
+
+  return "Metime-Move-for-More-" +
+    (cleanName || "Participant") + ".png";
 }
 
-downloadButton.addEventListener("click", function() {
-  if (!imageData) return;
+async function preparePoster() {
+  if (!imageData) {
+    message.textContent =
+      "Your poster was not found. Return to the creation page, " +
+      "enter your details and create your poster first.";
+    return;
+  }
 
-  const safeName = participantName
-    .replace(/[^a-z0-9]+/gi, "-")
-    .replace(/^-|-$/g, "") || "Participant";
+  try {
+    const response = await fetch(imageData);
+    posterBlob = await response.blob();
 
-  const link = document.createElement("a");
-  link.download = "Metime-Move-for-More-" + safeName + ".png";
-  link.href = imageData;
-  link.click();
+    poster.src = URL.createObjectURL(posterBlob);
+    poster.hidden = false;
+
+    savePhotoButton.hidden = false;
+    downloadButton.hidden = false;
+
+    message.textContent =
+      "Well done, " + participantName +
+      "! Your poster is ready. Choose how you want to save it.";
+  } catch (error) {
+    message.textContent =
+      "We couldn't prepare your poster. Please return and create it again.";
+  }
+}
+
+savePhotoButton.addEventListener("click", async function() {
+  if (!posterBlob) {
+    alert("Your poster is not ready yet. Please wait a moment.");
+    return;
+  }
+
+  const file = new File(
+    [posterBlob],
+    safeFileName(),
+    { type: "image/png" }
+  );
+
+  try {
+    if (
+      navigator.share &&
+      navigator.canShare &&
+      navigator.canShare({ files: [file] })
+    ) {
+      await navigator.share({
+        files: [file],
+        title: "My MOVE FOR MORE Poster"
+      });
+
+      message.textContent =
+        "If you selected Save Image or Save to Photos, " +
+        "check your iPhone Photos app.";
+    } else {
+      downloadPoster();
+      message.textContent =
+        "Your poster was downloaded. Open it and use the Share " +
+        "menu to save it to Photos.";
+    }
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      alert(
+        "The sharing menu could not open. " +
+        "Please tap Download Poster PNG instead."
+      );
+    }
+  }
 });
+
+function downloadPoster() {
+  if (!posterBlob) {
+    alert("Your poster is not ready yet. Please wait a moment.");
+    return;
+  }
+
+  const url = URL.createObjectURL(posterBlob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = safeFileName();
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(function() {
+    URL.revokeObjectURL(url);
+  }, 60000);
+}
+
+downloadButton.addEventListener("click", downloadPoster);
 
 document.getElementById("back").addEventListener("click", function() {
   window.location.href = "index.html";
 });
+
+preparePoster();
 </script>
 </body>
 </html>
-```
